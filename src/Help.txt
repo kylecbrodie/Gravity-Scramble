@@ -1,0 +1,1 @@
+If the keyboard does not work, minimize the window then reopen it. This should make it work again.

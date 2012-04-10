@@ -1,0 +1,8 @@
+Draw Outlines - Turn this on to see the hitbox for most objects.
+Revive Enemies - Turn this on to revive all enemies every time you die. The boss will also regain its health.
+Speed - Toggle this to adjust the speed of the game. Higher speeds may result in lower-quality animations.
+Max. Speed - Toggle this to adjust the highest speed of the game. Higher speeds might be more resource-intensive on your computer.
+Fix Window Size - Click on this to remove any gray areas from your window.
+Set Preferred Size - Click on this to use the current window size as your preferred size.
+Use Default Size - Click on this to use the same window size asthe first time you played.
+Use Preferred Size - Click on this to change your window size to your preferred size.

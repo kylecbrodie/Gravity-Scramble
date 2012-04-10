@@ -1,0 +1,19 @@
+------------------------------------------------------------------------
+This is the project README file. Here, you should describe your project.
+Tell the reader (someone who does not know anything about this project)
+all he/she needs to know. The comments should usually include at least:
+------------------------------------------------------------------------
+
+PROJECT TITLE: Gravity Scramble
+PURPOSE OF PROJECT: to create a 2D sidescrolling platform game with gravity chambers instead of walls, enemies that
+                    move side to side, enemies that do that plus jump, enemies that fly and follow you, enemies that
+                    can only be defeated by fireballs, a boss battle, a fireball powerup, switches, moving gravity
+                    chambers, timed and switched fire cubes, and checkpoints
+VERSION or DATE: not complete
+HOW TO START THIS PROJECT: right click on Tester then click on void main(String[] args)
+AUTHORS: Nathaniel Minsung Kim
+USER INSTRUCTIONS: hold the left or right arrow keys to move
+                   press up to jump
+                   jump on enemies to defeat them
+                   you start with 3 health, when you run out you return to a checkpoint
+                   touch a switch to make something happen
