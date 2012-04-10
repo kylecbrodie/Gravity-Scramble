@@ -1,23 +1,18 @@
 package gravityScramble.switchActions;
 
 import gravityScramble.touchables.obstacles.GravityChamber;
-import java.io.Serializable;
 
-public class SwitchAction2
-  implements SwitchAction, Serializable
-{
-  GravityChamber[] gravityChambers;
+public class SwitchAction2 implements SwitchAction {
 
-  public SwitchAction2(GravityChamber[] g)
-  {
-    gravityChambers = g;
-  }
+	GravityChamber[] gravityChambers;
 
-  public void action()
-  {
-    for (int x = 0; x < gravityChambers.length; x++)
-    {
-      gravityChambers[x].setActive();
-    }
-  }
+	public SwitchAction2(GravityChamber[] g) {
+		gravityChambers = g;
+	}
+
+	public void action() {
+		for (int i = 0; i < gravityChambers.length; i++) {
+			gravityChambers[i].setActive();
+		}
+	}
 }

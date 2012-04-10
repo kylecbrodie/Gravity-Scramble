@@ -2,142 +2,107 @@ package gravityScramble.touchables.enemies;
 
 import gravityScramble.touchables.Touchable;
 import java.awt.Graphics;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Group extends MovingEnemy
-  implements Serializable
-{
-  public ArrayList<MovingEnemy> enemies;
-  private ArrayList<MovingEnemy> initialEnemies;
-  private int space;
-  private int counter;
+public class Group extends MovingEnemy {
 
-  public Group(int pos, int alt, ArrayList<MovingEnemy> e, int sp, Touchable l, Touchable r)
-  {
-    super(0, 0, pos, alt, false, 255, "none", "right", l, r, "group");
-    enemies = e;
-    space = sp;
-    for (int x = 0; x < enemies.size(); x++)
-    {
-      width += ((MovingEnemy)enemies.get(x)).getWidth();
-      width += space;
-      if (x == 0)
-      {
-        ((MovingEnemy)enemies.get(x)).setCoordinates(pos, alt);
-      }
-      else
-      {
-        ((MovingEnemy)enemies.get(x)).setCoordinates(((MovingEnemy)enemies.get(x - 1)).getPosition() + ((MovingEnemy)enemies.get(x - 1)).getWidth() + space, alt);
-      }
+	public ArrayList<MovingEnemy> enemies;
+	private ArrayList<MovingEnemy> initialEnemies;
+	private int space;
+	private int counter;
 
-      ((MovingEnemy)enemies.get(x)).setInitialCoordinates(((MovingEnemy)enemies.get(x)).getPosition(), ((MovingEnemy)enemies.get(x)).getAltitude());
-    }
+	public Group(int pos, int alt, ArrayList<MovingEnemy> e, int sp, Touchable l, Touchable r) {
+		super(0, 0, pos, alt, false, 255, "none", "right", l, r, "group");
+		enemies = e;
+		space = sp;
+		for (int i = 0; i < enemies.size(); i++) {
+			width += enemies.get(i).getWidth();
+			width += space;
+			if (i == 0) {
+				enemies.get(i).setCoordinates(pos, alt);
+			} else {
+				enemies.get(i).setCoordinates(enemies.get(i - 1).getPosition() + enemies.get(i - 1).getWidth() + space, alt);
+			}
 
-    width -= space;
-    for (int x = 0; x < enemies.size(); x++)
-    {
-      updateBoundaries(x);
-    }
-    initialEnemies = new ArrayList();
-    for (int x = 0; x < e.size(); x++)
-    {
-      initialEnemies.add(e.get(x));
-    }
-    counter = 0;
-  }
+			enemies.get(i).setInitialCoordinates(enemies.get(i).getPosition(), enemies.get(i).getAltitude());
+		}
 
-  public void drawing(Graphics g, int x, int y)
-  {
-    for (int a = 0; a < enemies.size(); a++)
-    {
-      ((MovingEnemy)enemies.get(a)).paintComponent(g, x, y);
-    }
-  }
+		width -= space;
+		for (int x = 0; x < enemies.size(); x++) {
+			updateBoundaries(x);
+		}
+		initialEnemies = new ArrayList<MovingEnemy>();
+		initialEnemies.addAll(enemies);
+		counter = 0;
+	}
 
-  public void updateBoundaries(int x)
-  {
-    if (x == 0)
-    {
-      ((MovingEnemy)enemies.get(x)).leftBoundary = leftBoundary;
-    }
-    else
-    {
-      ((MovingEnemy)enemies.get(x)).leftBoundary = ((Touchable)enemies.get(x - 1));
-    }
-    if (x == enemies.size() - 1)
-    {
-      ((MovingEnemy)enemies.get(x)).rightBoundary = rightBoundary;
-    }
-    else
-    {
-      ((MovingEnemy)enemies.get(x)).rightBoundary = ((Touchable)enemies.get(x + 1));
-    }
-  }
+	public void drawing(Graphics g, int x, int y) {
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).paintComponent(g, x, y);
+		}
+	}
 
-  public void changePosition()
-  {
-    for (int a = 0; a < enemies.size(); a++)
-    {
-      if ((((MovingEnemy)enemies.get(a)).opacity != 0) || (!((MovingEnemy)enemies.get(a)).getDefeated()))
-        continue;
-      enemies.remove(a);
-      if (enemies.size() > 0)
-      {
-        if (a > 0)
-        {
-          updateBoundaries(a - 1);
-        }
-        if (a < enemies.size())
-        {
-          updateBoundaries(a);
-        }
-      }
-      width = 0;
-      for (int b = 0; b < enemies.size(); b++)
-      {
-        width += ((MovingEnemy)enemies.get(b)).getWidth();
-        width += space;
-      }
-      width -= space;
-    }
+	public void updateBoundaries(int i) {
+		if (i == 0) {
+			enemies.get(i).leftBoundary = leftBoundary;
+		} else {
+			enemies.get(i).leftBoundary = enemies.get(i - 1);
+		}
+		if (i == enemies.size() - 1) {
+			enemies.get(i).rightBoundary = rightBoundary;
+		} else {
+			enemies.get(i).rightBoundary = enemies.get(i + 1);
+		}
+	}
 
-    for (int x = 0; x < enemies.size(); x++)
-    {
-      ((MovingEnemy)enemies.get(x)).update();
-    }
-    if (counter > 0)
-    {
-      if (counter == 1)
-      {
-        enemies = new ArrayList();
-        for (int x = 0; x < initialEnemies.size(); x++)
-        {
-          enemies.add(initialEnemies.get(x));
-        }
-        for (int x = 0; x < enemies.size(); x++)
-        {
-          ((MovingEnemy)enemies.get(x)).becomeDefeated();
-          ((MovingEnemy)enemies.get(x)).setOpacity(0);
-          ((MovingEnemy)enemies.get(x)).becomeSummoned();
-          updateBoundaries(x);
-        }
-      }
-      counter += 1;
-      if (counter >= 52)
-      {
-        counter = 0;
-      }
-    }
-  }
+	public void changePosition() {
+		for (int i = 0; i < enemies.size(); i++) {
+			if (enemies.get(i).opacity != 0 || !enemies.get(i).getDefeated()) {
+				continue;
+			}
+			enemies.remove(i);
+			if (enemies.size() > 0) {
+				if (i > 0) {
+					updateBoundaries(i - 1);
+				}
+				if (i < enemies.size()) {
+					updateBoundaries(i);
+				}
+			}
+			width = 0;
+			for (int j = 0; j < enemies.size(); j++) {
+				width += enemies.get(j).getWidth();
+				width += space;
+			}
+			width -= space;
+		}
 
-  public void changePowerUp(String p) {
-  }
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies.get(i).update();
+		}
+		if (counter > 0) {
+			if (counter == 1) {
+				enemies = new ArrayList<MovingEnemy>();
+				enemies.addAll(initialEnemies);
+				for (int i = 0; i < enemies.size(); i++) {
+					enemies.get(i).becomeDefeated();
+					enemies.get(i).setOpacity(0);
+					enemies.get(i).becomeSummoned();
+					updateBoundaries(i);
+				}
+			}
+			counter++;
+			if (counter >= 52) {
+				counter = 0;
+			}
+		}
+	}
 
-  public void becomeDefeated() {
-  }
+	public void changePowerUp(String p) {}
 
-  public void becomeSummoned() {
-    counter = 1;
-  }
+	public void becomeDefeated() {}
+
+	public void becomeSummoned() {
+		counter = 1;
+	}
 }

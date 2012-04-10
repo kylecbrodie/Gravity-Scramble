@@ -2,131 +2,114 @@ package gravityScramble.touchables.enemies;
 
 import gravityScramble.touchables.Touchable;
 import java.awt.Graphics;
-import java.io.Serializable;
 
-public abstract class Enemy extends Touchable
-  implements Serializable
-{
-  protected boolean defeated;
-  protected int bounceCounter;
-  protected int opacity;
-  protected int saveOpacity;
-  protected String powerUp;
-  private boolean opacityChanger;
-  private int initialPosition;
-  private int initialAltitude;
+public abstract class Enemy extends Touchable {
 
-  public Enemy(int w, int h, int pos, int alt, boolean def, int opa, String power, String cl)
-  {
-    super(w, h, pos, alt, cl);
-    initialPosition = pos;
-    initialAltitude = alt;
-    defeated = def;
-    bounceCounter = 0;
-    opacity = opa;
-    saveOpacity = opa;
-    powerUp = power;
-    opacityChanger = false;
-  }
+	protected boolean defeated;
+	protected int bounceCounter;
+	protected int opacity;
+	protected int saveOpacity;
+	protected String powerUp;
+	private boolean opacityChanger;
+	private int initialPosition;
+	private int initialAltitude;
 
-  public boolean getDefeated()
-  {
-    return defeated;
-  }
+	public Enemy(int w, int h, int pos, int alt, boolean def, int opa, String power, String cl) {
+		super(w, h, pos, alt, cl);
+		initialPosition = pos;
+		initialAltitude = alt;
+		defeated = def;
+		bounceCounter = 0;
+		opacity = opa;
+		saveOpacity = opa;
+		powerUp = power;
+		opacityChanger = false;
+	}
 
-  public void paintComponent(Graphics g, int x, int y)
-  {
-    if (getOpacity() != 0)
-    {
-      drawing(g, x, y);
-    }
-  }
+	public boolean getDefeated() {
+		return defeated;
+	}
 
-  public abstract void drawing(Graphics paramGraphics, int paramInt1, int paramInt2);
+	public void paintComponent(Graphics g, int x, int y) {
+		if (getOpacity() != 0) {
+			drawing(g, x, y);
+		}
+	}
 
-  public abstract void becomeDefeated();
+	public abstract void drawing(Graphics g, int x, int y);
 
-  public void becomeSummoned() {
-    defeated = false;
-    setCoordinates(initialPosition, initialAltitude);
-  }
+	public abstract void becomeDefeated();
 
-  public void changeBounceCounter()
-  {
-    if ((defeated) && (bounceCounter < 5))
-    {
-      bounceCounter += 1;
-    }
-    if (!defeated)
-    {
-      bounceCounter = 0;
-    }
-  }
+	public void becomeSummoned() {
+		defeated = false;
+		setCoordinates(initialPosition, initialAltitude);
+	}
 
-  public int getBounceCounter()
-  {
-    return bounceCounter;
-  }
+	public void changeBounceCounter() {
+		if (defeated && bounceCounter < 5) {
+			bounceCounter++;
+		}
+		if (!defeated) {
+			bounceCounter = 0;
+		}
+	}
 
-  public void changeOpacity(double n)
-  {
-    opacity -= (int)(n * 15.0D);
-  }
+	public int getBounceCounter() {
+		return bounceCounter;
+	}
 
-  public void setOpacity(int n) {
-    opacity = n;
-  }
+	public void changeOpacity(double n) {
+		opacity -= (int) (n * 15.0);
+	}
 
-  public void differentOpacity(int n) {
-    opacity = n;
-    saveOpacity = n;
-  }
+	public void setOpacity(int n) {
+		opacity = n;
+	}
 
-  public int getOpacity()
-  {
-    return opacity;
-  }
+	public void differentOpacity(int n) {
+		opacity = n;
+		saveOpacity = n;
+	}
 
-  public int getSaveOpacity() {
-    return saveOpacity;
-  }
+	public int getOpacity() {
+		return opacity;
+	}
 
-  public String getPowerUp()
-  {
-    return powerUp;
-  }
-  public abstract void setDirection(String paramString);
+	public int getSaveOpacity() {
+		return saveOpacity;
+	}
 
-  public abstract void changePowerUp(String paramString);
+	public String getPowerUp() {
+		return powerUp;
+	}
 
-  public abstract void changePosition();
+	public abstract void setDirection(String dir);
 
-  public void update() { if (((!defeated) && (opacity == saveOpacity)) || ((defeated) && (opacity != saveOpacity)) || ((this instanceof Boss)))
-    {
-      changePosition();
-    }
-    if (opacityChanger)
-    {
-      if ((defeated) && (opacity != 0))
-      {
-        changeOpacity(1.0D);
-      }
-      if ((!defeated) && (opacity != saveOpacity) && (!(this instanceof Boss)))
-      {
-        changeOpacity(-0.3333333333333333D);
-      }
-    }
-    opacityChanger = (!opacityChanger);
-    if (opacity < 0)
-    {
-      opacity = 0;
-    }
-    changeBounceCounter();
-  }
+	public abstract void changePowerUp(String p);
 
-  public void setInitialCoordinates(int pos, int alt)
-  {
-    initialPosition = pos;
-    initialAltitude = alt;
-  }
+	public abstract void changePosition();
+
+	public void update() {
+		if ((!defeated && opacity == saveOpacity) || (defeated && opacity != saveOpacity) || this instanceof Boss) {
+			changePosition();
+		}
+		if (opacityChanger) {
+			if (defeated && opacity != 0) {
+				changeOpacity(1.0);
+			}
+			if (!defeated && opacity != saveOpacity && !(this instanceof Boss)) {
+				changeOpacity(-1.0 / 3.0);
+			}
+		}
+		opacityChanger = !opacityChanger;
+		if (opacity < 0) {
+			opacity = 0;
+		}
+		changeBounceCounter();
+	}
+
+	public void setInitialCoordinates(int pos, int alt) {
+		initialPosition = pos;
+		initialAltitude = alt;
+	}
 }

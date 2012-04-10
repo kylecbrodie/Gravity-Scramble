@@ -1,23 +1,18 @@
 package gravityScramble.switchActions;
 
 import gravityScramble.touchables.obstacles.FireCube;
-import java.io.Serializable;
 
-public class SwitchAction3
-  implements SwitchAction, Serializable
-{
-  FireCube[] fireCubes;
+public class SwitchAction3 implements SwitchAction {
 
-  public SwitchAction3(FireCube[] fire)
-  {
-    fireCubes = fire;
-  }
+	FireCube[] fireCubes;
 
-  public void action()
-  {
-    for (int x = 0; x < fireCubes.length; x++)
-    {
-      fireCubes[x].turnOff();
-    }
-  }
+	public SwitchAction3(FireCube[] fire) {
+		fireCubes = fire;
+	}
+
+	public void action() {
+		for (int i = 0; i < fireCubes.length; i++) {
+			fireCubes[i].turnOff();
+		}
+	}
 }

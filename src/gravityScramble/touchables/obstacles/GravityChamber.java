@@ -4,240 +4,202 @@ import gravityScramble.touchables.Player;
 import gravityScramble.touchables.Touchable;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.Serializable;
 
-public class GravityChamber extends Touchable
-  implements Serializable
-{
-  private String direction;
-  private String moveDirection;
-  private int counter;
-  private int startPosition;
-  private boolean switchStarted;
-  private int distanceToStart;
-  private boolean active;
-  private int opacity;
-  private boolean canMove;
-  private boolean adjust;
-  private int counterLimit;
+public class GravityChamber extends Touchable {
 
-  public GravityChamber(int pos, int alt, String dir)
-  {
-    super(0, 0, pos, alt, "gravityChamber");
-    if ((dir == "up") || (dir.equals("down")))
-    {
-      width = 150;
-      height = 150;
-    }
-    else
-    {
-      width = 75;
-      height = 225;
-    }
-    direction = dir;
-    moveDirection = "none";
-    counter = 0;
-    startPosition = pos;
-    switchStarted = false;
-    distanceToStart = 0;
-    active = true;
-    opacity = 170;
-    canMove = false;
-    adjust = false;
-    counterLimit = 0;
-  }
+	private String direction;
+	private String moveDirection;
+	private int counter;
+	private int startPosition;
+	private boolean switchStarted;
+	private int distanceToStart;
+	private boolean active;
+	private int opacity;
+	private boolean canMove;
+	private boolean adjust;
+	private int counterLimit;
 
-  public GravityChamber(int pos, int alt, String dir, String movdir, boolean switchOperated, boolean adj, int move) {
-    super(0, 0, pos, alt, "gravityChamber");
-    if (dir == "up")
-    {
-      width = 150;
-      height = 150;
-    }
-    else
-    {
-      width = 75;
-      height = 225;
-    }
-    position = pos;
-    altitude = alt;
-    direction = dir;
-    moveDirection = movdir;
-    counter = 0;
-    startPosition = pos;
-    switchStarted = false;
-    distanceToStart = 0;
-    active = true;
-    opacity = 170;
-    canMove = switchOperated;
-    adjust = adj;
-    counterLimit = move;
-    whichClass = "gravityChamber";
-  }
+	public GravityChamber(int pos, int alt, String dir) {
+		super(0, 0, pos, alt, "gravityChamber");
+		if (dir.equals("up") || dir.equals("down")) {
+			width = 150;
+			height = 150;
+		} else {
+			width = 75;
+			height = 225;
+		}
+		direction = dir;
+		moveDirection = "none";
+		counter = 0;
+		startPosition = pos;
+		switchStarted = false;
+		distanceToStart = 0;
+		active = true;
+		opacity = 170;
+		canMove = false;
+		adjust = false;
+		counterLimit = 0;
+	}
 
-  public void paintComponent(Graphics g, int x, int y)
-  {
-    if (direction == "up")
-    {
-      Color transparentWhite = new Color(255, 255, 255, opacity);
-      g.setColor(transparentWhite);
-      g.fillRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-      transparentWhite = new Color(255, 255, 255, 170);
-      g.setColor(transparentWhite);
-      g.drawRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-    }
-    if (direction == "left")
-    {
-      Color transparentPurple = new Color(220, 0, 220, opacity);
-      g.setColor(transparentPurple);
-      g.fillRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-      transparentPurple = new Color(220, 0, 220, 170);
-      g.setColor(transparentPurple);
-      g.drawRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-    }
-    if (direction == "right")
-    {
-      Color transparentGreen = new Color(0, 255, 0, opacity);
-      g.setColor(transparentGreen);
-      g.fillRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-      transparentGreen = new Color(0, 255, 0, 170);
-      g.setColor(transparentGreen);
-      g.drawRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-    }
-    if (direction.equals("down"))
-    {
-      Color transparentYellow = new Color(255, 255, 0, opacity);
-      g.setColor(transparentYellow);
-      g.fillRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-      transparentYellow = new Color(255, 255, 0, 170);
-      g.setColor(transparentYellow);
-      g.drawRect(drawingPosition(x), drawingAltitude(y) - height, width, height);
-    }
-  }
+	public GravityChamber(int pos, int alt, String dir, String movdir, boolean switchOperated, boolean adj, int move) {
+		super(0, 0, pos, alt, "gravityChamber");
+		if (dir.equals("up")) {
+			width = 150;
+			height = 150;
+		} else {
+			width = 75;
+			height = 225;
+		}
+		position = pos;
+		altitude = alt;
+		direction = dir;
+		moveDirection = movdir;
+		counter = 0;
+		startPosition = pos;
+		switchStarted = false;
+		distanceToStart = 0;
+		active = true;
+		opacity = 170;
+		canMove = switchOperated;
+		adjust = adj;
+		counterLimit = move;
+		whichClass = "gravityChamber";
+	}
 
-  public void pushPlayer(Player player)
-  {
-    if (adjust)
-    {
-      altitude = player.getAltitude();
-    }
-    if ((isTouching(player)) && (player.getAltitude() != altitude + height) && (active))
-    {
-      if (direction == "up")
-      {
-        player.changeAltitude(3);
-      }
-      if (direction == "left")
-      {
-        player.changePosition(-2);
-      }
-      if (direction == "right")
-      {
-        player.changePosition(2);
-      }
-      if (direction.equals("down"))
-      {
-        player.changeAltitude(-3);
-      }
-    }
-  }
+	public void paintComponent(Graphics g, int x, int y) {
+		int drawPosX = drawingPosition(x);
+		int drawAltY = drawingAltitude(y);
+		
+		if (direction.equals("up")) {
+			Color transparentWhite = new Color(255, 255, 255, opacity);
+			g.setColor(transparentWhite);
+			g.fillRect(drawPosX, drawAltY - height, width, height);
+			
+			transparentWhite = new Color(255, 255, 255, 170);
+			g.setColor(transparentWhite);
+			g.drawRect(drawPosX, drawAltY - height, width, height);
+		}
+		if (direction.equals("left")) {
+			Color transparentPurple = new Color(220, 0, 220, opacity);
+			g.setColor(transparentPurple);
+			g.fillRect(drawPosX, drawAltY - height, width, height);
+			
+			transparentPurple = new Color(220, 0, 220, 170);
+			g.setColor(transparentPurple);
+			g.drawRect(drawPosX, drawAltY - height, width, height);
+		}
+		if (direction.equals("right")) {
+			Color transparentGreen = new Color(0, 255, 0, opacity);
+			g.setColor(transparentGreen);
+			g.fillRect(drawPosX, drawAltY - height, width, height);
+			
+			transparentGreen = new Color(0, 255, 0, 170);
+			g.setColor(transparentGreen);
+			g.drawRect(drawPosX, drawAltY - height, width, height);
+		}
+		if (direction.equals("down")) {
+			Color transparentYellow = new Color(255, 255, 0, opacity);
+			g.setColor(transparentYellow);
+			g.fillRect(drawPosX, drawAltY - height, width, height);
+			
+			transparentYellow = new Color(255, 255, 0, 170);
+			g.setColor(transparentYellow);
+			g.drawRect(drawPosX, drawAltY - height, width, height);
+		}
+	}
 
-  public void move()
-  {
-    if (canMove)
-    {
-      if (moveDirection == "left")
-      {
-        position -= 1;
-      }
-      else if (moveDirection == "right")
-      {
-        position += 1;
-      }
+	public void pushPlayer(Player player) {
+		if (adjust) {
+			altitude = player.getAltitude();
+		}
+		if (isTouching(player) && player.getAltitude() != altitude + height && active) {
+			if (direction.equals("up")) {
+				player.changeAltitude(3);
+			}
+			if (direction.equals("left")) {
+				player.changePosition(-2);
+			}
+			if (direction.equals("right")) {
+				player.changePosition(2);
+			}
+			if (direction.equals("down")) {
+				player.changeAltitude(-3);
+			}
+		}
+	}
 
-      if (moveDirection == "up")
-      {
-        altitude += 1;
-      }
-      else if (moveDirection == "down")
-      {
-        altitude -= 1;
-      }
+	public void move() {
+		if (canMove) {
+			if (moveDirection.equals("left")) {
+				position--;
+			} else if (moveDirection.equals("right")) {
+				position++;
+			}
 
-      counter += 1;
-      if (counter == counterLimit)
-      {
-        counter = 0;
-        if (moveDirection == "left")
-        {
-          moveDirection = "right";
-        }
-        else if (moveDirection == "right")
-        {
-          moveDirection = "left";
-        }
+			if (moveDirection.equals("up")) {
+				altitude++;
+			} else if (moveDirection.equals("down")) {
+				altitude--;
+			}
 
-        if (moveDirection == "up")
-        {
-          moveDirection = "down";
-        }
-        else if (moveDirection == "down")
-        {
-          moveDirection = "up";
-        }
-      }
-    }
-  }
+			counter++;
+			if (counter == counterLimit) {
+				counter = 0;
+				if (moveDirection.equals("left")) {
+					moveDirection = "right";
+				} else if (moveDirection.equals("right")) {
+					moveDirection = "left";
+				}
 
-  public void goBack()
-  {
-    if (!switchStarted)
-    {
-      counter = 0;
-      switchStarted = true;
-      distanceToStart = (position - startPosition);
-      canMove = false;
-    }
-    counter += 1;
-    position = (startPosition + distanceToStart * (100 - counter) / 100);
-    super.setCoordinates(position, altitude);
-    if (counter == 100)
-    {
-      counter = 0;
-      switchStarted = false;
-      moveDirection = "right";
-      canMove = true;
-    }
-  }
+				if (moveDirection.equals("up")) {
+					moveDirection = "down";
+				} else if (moveDirection.equals("down")) {
+					moveDirection = "up";
+				}
+			}
+		}
+	}
 
-  public void setActive()
-  {
-    active = false;
-  }
+	public void goBack() {
+		if (!switchStarted) {
+			counter = 0;
+			switchStarted = true;
+			distanceToStart = position - startPosition;
+			canMove = false;
+		}
+		counter++;
+		position = startPosition + distanceToStart * (100 - counter) / 100;
+		super.setCoordinates(position, altitude);
+		if (counter == 100) {
+			counter = 0;
+			switchStarted = false;
+			moveDirection = "right";
+			canMove = true;
+		}
+	}
 
-  public void setClass(String cl)
-  {
-    whichClass = cl;
-    super.setClass(cl);
-  }
+	public void setActive() {
+		active = false;
+	}
 
-  public String getDirection()
-  {
-    return direction;
-  }
+	public void setClass(String cl) {
+		whichClass = cl;
+		super.setClass(cl);
+	}
 
-  public GravityChamber setSize(int x, int y)
-  {
-    width = x;
-    height = y;
-    return this;
-  }
+	public String getDirection() {
+		return direction;
+	}
 
-  public void changeOpacity()
-  {
-    if ((!active) && (opacity != 0))
-    {
-      opacity -= 5;
-    }
-  }
+	public GravityChamber setSize(int x, int y) {
+		width = x;
+		height = y;
+		return this;
+	}
+
+	public void changeOpacity() {
+		if (!active && opacity != 0) {
+			opacity -= 5;
+		}
+	}
 }

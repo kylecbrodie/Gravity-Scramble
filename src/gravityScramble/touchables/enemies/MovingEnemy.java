@@ -1,40 +1,34 @@
 package gravityScramble.touchables.enemies;
 
 import gravityScramble.touchables.Touchable;
-import java.io.Serializable;
 
-public abstract class MovingEnemy extends Enemy
-  implements Serializable
-{
-  protected Touchable leftBoundary;
-  protected Touchable rightBoundary;
-  protected String direction;
+public abstract class MovingEnemy extends Enemy {
 
-  public MovingEnemy(int w, int h, int pos, int alt, boolean def, int opa, String power, String dir, Touchable l, Touchable r, String cl)
-  {
-    super(w, h, pos, alt, def, opa, power, cl);
-    direction = dir;
-    leftBoundary = l;
-    rightBoundary = r;
-  }
+	protected Touchable leftBoundary;
+	protected Touchable rightBoundary;
+	protected String direction;
 
-  public void setDirection(String dir)
-  {
-    direction = dir;
-  }
+	public MovingEnemy(int w, int h, int pos, int alt, boolean def, int opa, String power, String dir, Touchable l, Touchable r, String cl) {
+		super(w, h, pos, alt, def, opa, power, cl);
+		direction = dir;
+		leftBoundary = l;
+		rightBoundary = r;
+	}
 
-  public Touchable getLeftBoundary()
-  {
-    return leftBoundary;
-  }
+	public void setDirection(String dir) {
+		direction = dir;
+	}
 
-  public Touchable getRightBoundary() {
-    return rightBoundary;
-  }
+	public Touchable getLeftBoundary() {
+		return leftBoundary;
+	}
 
-  public void becomeSummoned()
-  {
-    direction = "right";
-    super.becomeSummoned();
-  }
+	public Touchable getRightBoundary() {
+		return rightBoundary;
+	}
+
+	public void becomeSummoned() {
+		direction = "right";
+		super.becomeSummoned();
+	}
 }

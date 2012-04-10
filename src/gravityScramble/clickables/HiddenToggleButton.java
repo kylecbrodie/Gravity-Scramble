@@ -4,57 +4,51 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-public class HiddenToggleButton extends Clickable
-{
-  private int width;
-  private int option;
-  private String[] names;
-  private String menuType;
-  private String tag;
+public class HiddenToggleButton extends Clickable {
 
-  public HiddenToggleButton(int pos, int alt, int w, String[] n, int o, String m, String t)
-  {
-    super(pos, alt);
-    width = w;
-    option = o;
-    names = n;
-    menuType = m;
-    tag = t;
-  }
+	private int width;
+	private int option;
+	private String[] names;
+	private String menuType;
+	private String tag;
 
-  public void paintComponent(Graphics g, int x, int y)
-  {
-    g.setColor(Color.gray.darker());
-    g.fillRect(position, altitude, width, 40);
-    g.setColor(Color.white);
-    g.setFont(new Font("Serif", 0, 30));
-    g.drawString(names[option], position + 5, altitude + 35);
-  }
+	public HiddenToggleButton(int pos, int alt, int w, String[] n, int o, String m, String t) {
+		super(pos, alt);
+		width = w;
+		option = o;
+		names = n;
+		menuType = m;
+		tag = t;
+	}
 
-  public boolean isClickedBy(int x, int y)
-  {
-    return (x > position) && (x <= position + width) && (y > altitude) && (y < altitude + 40);
-  }
+	public void paintComponent(Graphics g, int x, int y) {
+		g.setColor(Color.gray.darker());
+		g.fillRect(position, altitude, width, 40);
+		g.setColor(Color.white);
+		g.setFont(new Font("Serif", 0, 30));
+		g.drawString(names[option], position + 5, altitude + 35);
+	}
 
-  public void toggle()
-  {
-    option += 1;
-    if (option >= names.length)
-    {
-      option = 0;
-    }
-  }
+	public boolean isClickedBy(int x, int y) {
+		return x > position && x <= position + width && y > altitude && y < altitude + 40;
+	}
 
-  public String getMenu()
-  {
-    return menuType;
-  }
+	public void toggle() {
+		option += 1;
+		if (option >= names.length) {
+			option = 0;
+		}
+	}
 
-  public int getOption() {
-    return option;
-  }
+	public String getMenu() {
+		return menuType;
+	}
 
-  public String getTag() {
-    return tag;
-  }
+	public int getOption() {
+		return option;
+	}
+
+	public String getTag() {
+		return tag;
+	}
 }

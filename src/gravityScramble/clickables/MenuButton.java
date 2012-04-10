@@ -3,64 +3,53 @@ package gravityScramble.clickables;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.io.Serializable;
 
-public class MenuButton extends Clickable
-  implements Serializable
-{
-  private int width;
-  private String name;
-  private boolean clicking;
-  private String menuType;
-  private String sendTo;
+public class MenuButton extends Clickable {
 
-  public MenuButton(int pos, int alt, int w, String n, String menu, String send)
-  {
-    super(pos, alt);
-    width = w;
-    name = n;
-    clicking = false;
-    menuType = menu;
-    sendTo = send;
-  }
+	private int width;
+	private String name;
+	private boolean clicking;
+	private String menuType;
+	private String sendTo;
 
-  public void paintComponent(Graphics g)
-  {
-    paintComponent(g, 0, 0);
-  }
+	public MenuButton(int pos, int alt, int w, String n, String menu, String send) {
+		super(pos, alt);
+		width = w;
+		name = n;
+		clicking = false;
+		menuType = menu;
+		sendTo = send;
+	}
 
-  public void paintComponent(Graphics g, int x, int y) {
-    if (clicking)
-    {
-      g.setColor(Color.blue.darker());
-    }
-    else
-    {
-      g.setColor(Color.gray.darker());
-    }
-    g.fillRect(position, altitude, width, 40);
-    g.setColor(Color.white);
-    g.setFont(new Font("Serif", 0, 30));
-    g.drawString(name, position + 5, altitude + 35);
-  }
+	public void paintComponent(Graphics g) {
+		paintComponent(g, 0, 0);
+	}
 
-  public boolean isClickedBy(int x, int y)
-  {
-    return (x > position) && (x <= position + width) && (y > altitude) && (y < altitude + 40);
-  }
+	public void paintComponent(Graphics g, int x, int y) {
+		if (clicking) {
+			g.setColor(Color.blue.darker());
+		} else {
+			g.setColor(Color.gray.darker());
+		}
+		g.fillRect(position, altitude, width, 40);
+		g.setColor(Color.white);
+		g.setFont(new Font("Serif", 0, 30));
+		g.drawString(name, position + 5, altitude + 35);
+	}
 
-  public String getName()
-  {
-    return name;
-  }
+	public boolean isClickedBy(int x, int y) {
+		return x > position && x <= position + width && y > altitude && y < altitude + 40;
+	}
 
-  public String getMenu()
-  {
-    return menuType;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public String getSend()
-  {
-    return sendTo;
-  }
+	public String getMenu() {
+		return menuType;
+	}
+
+	public String getSend() {
+		return sendTo;
+	}
 }

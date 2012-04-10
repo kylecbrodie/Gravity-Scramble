@@ -1,29 +1,24 @@
 package gravityScramble.decorations;
 
 import java.awt.Graphics;
-import java.io.Serializable;
 
-public abstract class Decoration
-  implements Serializable
-{
-  protected int position;
-  protected int altitude;
+public abstract class Decoration {
 
-  public Decoration(int pos, int alt)
-  {
-    position = pos;
-    altitude = alt;
-  }
+	protected int position;
+	protected int altitude;
 
-  public int drawingPosition(int x)
-  {
-    return 610 + (position - x);
-  }
+	public Decoration(int pos, int alt) {
+		position = pos;
+		altitude = alt;
+	}
 
-  public int drawingAltitude(int y)
-  {
-    return 640 + y - altitude;
-  }
+	public int drawingPosition(int x) {
+		return 610 + (position - x);
+	}
 
-  public abstract void paintComponent(Graphics paramGraphics, int paramInt1, int paramInt2);
+	public int drawingAltitude(int y) {
+		return 640 + y - altitude;
+	}
+
+	public abstract void paintComponent(Graphics g, int x, int y);
 }
